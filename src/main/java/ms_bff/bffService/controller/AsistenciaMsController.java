@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
  * Redirige al MS-Asistencia (puerto 8084) todo lo relacionado con asistencia y conducta.
  *
  * Rutas que maneja (todas protegidas — requieren JWT):
- *  /asistencia/**  → CRUD de registros de asistencia
- *  /conducta/**    → CRUD de registros de conducta
+ *  /asistencia/** → CRUD de asistencia, registro en lote, historial por matrícula
+ *  /conducta/**   → CRUD de conducta, historial por estudiante
+ *
+ * El JWT filter ya validó el token antes de llegar aquí.
+ * MS-Asistencia no tiene seguridad propia, así que el BFF es la única barrera.
  */
 @RestController
 @RequiredArgsConstructor

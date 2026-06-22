@@ -14,15 +14,27 @@ Angular (4200)
     ▼ HTTP + Bearer JWT
 BFF (8080)  ──── valida JWT localmente ────────────────────────┐
     │                                                           │
-    ├── /auth/**         → ms-auth (8082)                      │
-    ├── /cuenta-acceso/** → ms-auth (8082)                     │
-    ├── /refresh-token/** → ms-auth (8082)                     │
+    ├── /auth/**             → ms-auth (8082)                  │
+    ├── /cuenta-acceso/**    → ms-auth (8082)                  │
+    ├── /refresh-token/**    → ms-auth (8082)                  │
     │                                                           │
-    ├── /usuario/**      → ms-usuario (8081)                   │
-    ├── /docente/**      → ms-usuario (8081)                   │
-    ├── /estudiante/**   → ms-usuario (8081)                   │
-    ├── /apoderado/**    → ms-usuario (8081)                   │
-    └── /usuario-rol/**  → ms-usuario (8081)                   │
+    ├── /usuario/**          → ms-usuario (8081)                │
+    ├── /docente/**          → ms-usuario (8081)                │
+    ├── /estudiante/**       → ms-usuario (8081)                │
+    ├── /apoderado/**        → ms-usuario (8081)                │
+    ├── /administrativo/**   → ms-usuario (8081)                │
+    ├── /usuario-rol/**      → ms-usuario (8081)                │
+    ├── /apoderado-estudiante/** → ms-usuario (8081)            │
+    │                                                           │
+    ├── /cursos/**           → ms-academico (8083)              │
+    ├── /asignaturas/**      → ms-academico (8083)              │
+    ├── /curso-asignatura/** → ms-academico (8083)              │
+    ├── /evaluaciones/**     → ms-academico (8083)              │
+    ├── /matriculas/**       → ms-academico (8083)              │
+    ├── /calificaciones/**   → ms-academico (8083)              │
+    │                                                           │
+    ├── /asistencia/**       → ms-asistencia (8084)              │
+    └── /conducta/**         → ms-asistencia (8084)              │
                                                                 │
          JWT Secret compartido: mismo en BFF y ms-auth ────────┘
 ```
@@ -37,6 +49,8 @@ BFF (8080)  ──── valida JWT localmente ───────────
 | Maven | 3.8 o superior |
 | ms-auth | Corriendo en `http://localhost:8082` |
 | ms-usuario | Corriendo en `http://localhost:8081` |
+| ms-academico | Corriendo en `http://localhost:8083` |
+| ms-asistencia | Corriendo en `http://localhost:8084` |
 
 ---
 
@@ -65,6 +79,8 @@ server.port=8080
 # URLs de los microservicios internos
 ms-auth.url=http://localhost:8082
 ms-usuario.url=http://localhost:8081
+ms-academico.url=http://localhost:8083
+ms-asistencia.url=http://localhost:8084
 
 # Secret JWT — debe coincidir exactamente con el de ms-auth
 jwt.secret=misecretatuysuperaguantadadesdeprotegidodelmundoentero
@@ -79,6 +95,7 @@ jwt.secret=misecretatuysuperaguantadadesdeprotegidodelmundoentero
 |---|---|---|
 | POST | `/auth/login` | Autenticación con RUT y contraseña |
 | POST | `/auth/refresh` | Renovación de access token |
+| POST | `/auth/recuperar-password` | Recuperación de contraseña por correo (genera clave temporal y la envía vía Mailtrap) |
 
 ### Rutas protegidas (requieren `Authorization: Bearer <token>`)
 | Patrón | Proxy hacia |
@@ -92,6 +109,14 @@ jwt.secret=misecretatuysuperaguantadadesdeprotegidodelmundoentero
 | `/administrativo/**` | ms-usuario |
 | `/usuario-rol/**` | ms-usuario |
 | `/apoderado-estudiante/**` | ms-usuario |
+| `/cursos/**` | ms-academico |
+| `/asignaturas/**` | ms-academico |
+| `/curso-asignatura/**` | ms-academico |
+| `/evaluaciones/**` | ms-academico |
+| `/matriculas/**` | ms-academico |
+| `/calificaciones/**` | ms-academico |
+| `/asistencia/**` | ms-asistencia |
+| `/conducta/**` | ms-asistencia |
 
 ---
 

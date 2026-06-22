@@ -22,6 +22,7 @@ import java.util.List;
  * Reglas:
  *  - POST /auth/login  → público (el usuario todavía no tiene token)
  *  - POST /auth/refresh → público (el accessToken ya venció, no puede autenticarse)
+ *  - POST /auth/recuperar-password → público (el usuario olvidó su contraseña, no tiene token)
  *  - Todo lo demás     → requiere token válido
  */
 @Configuration
@@ -46,6 +47,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/recuperar-password").permitAll()
                 .anyRequest().authenticated()
             )
 
